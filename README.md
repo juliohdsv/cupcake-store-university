@@ -33,7 +33,7 @@ flowchart LR
 - **Acompanhamento:** cada pedido recebe um token público para consultar o pagamento e o andamento da entrega.
 - **Avaliações:** formulário com nome, data, relatos, nota de 1 a 5 estrelas e captura de tela opcional de até 3 MB. A autorização de publicação controla quais avaliações aparecem na home e nas páginas públicas; os detalhes são somente para leitura.
 - **Painel administrativo:** login com usuário e senha, sessão de 10 minutos, consulta de avaliações, filtro de pedidos por status e avanço da entrega. O acesso `convidado` vê pedidos pagos. O acesso oficial vê todos os pedidos e pode excluir pedidos e avaliações após confirmação.
-- **Interface:** layout responsivo, estados de carregamento, vazio e erro, mensagens de confirmação e navegação por teclado.
+- **Interface:** layout responsivo, favicon de cupcake, estados de carregamento, vazio e erro, mensagens de confirmação e navegação por teclado.
 
 ### Cartões de demonstração
 
