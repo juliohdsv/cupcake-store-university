@@ -1,0 +1,21 @@
+{
+  "name": "@pit/model",
+  "private": true,
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "db:migrate": "npm run build && node --env-file-if-exists=../.env dist/db/cli.js",
+    "db:seed": "npm run build && node --env-file-if-exists=../.env dist/db/cli.js seed"
+  },
+  "dependencies": {
+    "better-sqlite3": "13.2.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "9.6.0",
+    "vitest": "5.1.0"
+  }
+}

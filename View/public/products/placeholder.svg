@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Cupcake ilustrado">
+  <defs>
+    <linearGradient id="cup" x1="0" x2="1" y2="1"><stop stop-color="#cf8aa0"/><stop offset="1" stop-color="#9e3f62"/></linearGradient>
+    <linearGradient id="cream" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#fff7ed"/><stop offset="1" stop-color="#eac9bb"/></linearGradient>
+  </defs>
+  <ellipse cx="200" cy="269" rx="116" ry="17" fill="#d6b9b0" opacity=".45"/>
+  <path d="M94 163h212l-25 94c-3 10-10 15-22 15H141c-12 0-19-5-22-15z" fill="url(#cup)"/>
+  <path d="M114 180h172M126 218h148" stroke="#f3bfca" stroke-width="5" opacity=".65"/>
+  <path d="M97 161c-8-19 5-36 26-36 0-25 21-39 43-32 8-33 37-49 60-29 25-9 48 10 46 35 25-1 41 14 34 38 12 9 12 23 0 34z" fill="url(#cream)" stroke="#e5bdb0" stroke-width="3"/>
+  <path d="M133 131c26-5 35-10 45-32m71 30c-13-17-10-28-4-40" stroke="#fff" stroke-width="8" fill="none" opacity=".6" stroke-linecap="round"/>
+  <circle cx="201" cy="69" r="13" fill="#a72c55"/>
+  <path d="M201 58c0-15 11-23 24-22" stroke="#256d45" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

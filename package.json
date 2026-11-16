@@ -1,0 +1,45 @@
+{
+  "name": "pit-ii-cupcakes",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "Model",
+    "Controller",
+    "View"
+  ],
+  "engines": {
+    "node": ">=22 <27"
+  },
+  "scripts": {
+    "dev": "npm run build --workspace @pit/model && node --env-file-if-exists=.env deployment/prepare-local.mjs && node deployment/dev.mjs",
+    "dev:api": "npm run dev --workspace @pit/controller",
+    "dev:view": "npm run dev --workspace @pit/view",
+    "start:combined": "node --env-file-if-exists=.env deployment/server.mjs",
+    "build": "npm run build --workspace @pit/model && npm run build --workspace @pit/controller && npm run build --workspace @pit/view",
+    "lint": "eslint .",
+    "typecheck": "npm run build --workspace @pit/model && npm run typecheck --workspace @pit/model && npm run typecheck --workspace @pit/controller && npm run typecheck --workspace @pit/view",
+    "test": "npm run build --workspace @pit/model && npm run test --workspace @pit/model && npm run test --workspace @pit/controller && npm run test --workspace @pit/view && node --test tests/local-setup.test.mjs tests/product-images.test.mjs",
+    "db:migrate": "npm run db:migrate --workspace @pit/model",
+    "db:seed": "npm run db:seed --workspace @pit/model",
+    "test:e2e": "npm run build && playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@types/node": "24.13.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "tsx": "4.23.12",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.2"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.2.0": true,
+    "esbuild@0.28.2": true
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "11.0.1"
+    }
+  }
+}
