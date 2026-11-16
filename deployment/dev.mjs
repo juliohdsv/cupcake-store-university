@@ -3,13 +3,17 @@ import { resolve } from "node:path";
 
 const detached = process.platform !== "win32";
 const commands = [
-  ["API", ["--env-file-if-exists=.env", "--import", "tsx", "Controller/src/server.ts"]],
-  ["View", [resolve("node_modules/next/dist/bin/next"), "dev", "View", "--hostname", "127.0.0.1", "--port", "3000"]],
+  ["API", ["--env-file-if-exists=.env", "--import", "tsx", "Controller/src/server.ts"], {
+    API_PORT: "3021", API_HOST: "127.0.0.1", WEB_ORIGIN: "http://127.0.0.1:3020",
+  }],
+  ["View", [resolve("node_modules/next/dist/bin/next"), "dev", "View", "--hostname", "127.0.0.1", "--port", "3020"], {
+    API_INTERNAL_ORIGIN: "http://127.0.0.1:3021",
+  }],
 ];
 
-const children = commands.map(([name, args]) => ({
+const children = commands.map(([name, args, environment]) => ({
   name,
-  process: spawn(process.execPath, args, { stdio: "inherit", detached }),
+  process: spawn(process.execPath, args, { stdio: "inherit", detached, env: { ...process.env, ...environment } }),
 }));
 let stopping = false;
 let exited = 0;

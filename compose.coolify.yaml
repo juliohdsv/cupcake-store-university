@@ -1,0 +1,53 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      API_INTERNAL_ORIGIN: http://api:3021
+    expose:
+      - "3020"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - default
+      - backend
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      API_HOST: 0.0.0.0
+      API_PORT: "3021"
+      DATABASE_PATH: /app/data/cupcakes.sqlite
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Defina ADMIN_PASSWORD no Coolify}
+      ADMIN_SESSION_KEY: ${ADMIN_SESSION_KEY:?Defina ADMIN_SESSION_KEY no Coolify}
+      OFFICIAL_ADMIN_USERNAME: ${OFFICIAL_ADMIN_USERNAME:-engenheiro}
+      OFFICIAL_ADMIN_PASSWORD: ${OFFICIAL_ADMIN_PASSWORD:?Defina OFFICIAL_ADMIN_PASSWORD no Coolify}
+    expose:
+      - "3021"
+    volumes:
+      - cupcakes_data:/app/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3021/api/v1/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+networks:
+  backend:
+    internal: true
+
+volumes:
+  cupcakes_data:

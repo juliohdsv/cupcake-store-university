@@ -11,14 +11,14 @@ Loja de cupcakes desenvolvida como projeto acadêmico. O sistema reúne catálog
 | Dados e regras (`Model/`) | SQLite, `better-sqlite3`, migrações SQL e cálculos monetários em centavos                                          |
 | Testes                    | Vitest para testes unitários e de integração; Playwright para fluxos no navegador                                  |
 
-Os três diretórios são pacotes de um monorepo com npm workspaces. A View chama somente a API Fastify; o Controller valida as requisições e usa o Model para acessar o banco e aplicar as regras do pedido.
+Os três diretórios são pacotes de um monorepo com npm workspaces. O navegador chama o BFF no Next.js; ele encaminha somente as rotas da loja para o Fastify pela rede privada. O Controller valida os dados e usa o Model para acessar o banco e aplicar as regras do pedido.
 
 ## Arquitetura
 
 ```mermaid
 flowchart LR
-    Cliente["Navegador"] --> View["View · Next.js e React"]
-    View -->|"fetch /api/v1"| Controller["Controller · Fastify e Zod"]
+    Cliente["Navegador"] -->|"HTTPS · porta interna 3020"| View["View · Next.js e BFF"]
+    View -->|"rede privada · porta 3021"| Controller["Controller · Fastify e Zod"]
     Controller --> Model["Model · regras e repositórios"]
     Model --> Banco[("SQLite")]
     Controller --> Sessao["Sessão administrativa · cookie HttpOnly"]
@@ -52,7 +52,7 @@ npm ci
 npm run dev
 ```
 
-Na primeira execução, o projeto cria o arquivo `.env` local, aplica as migrações no SQLite e carrega o catálogo inicial. O frontend fica em `http://localhost:3000` e a API em `http://localhost:3333/api/v1`.
+Na primeira execução, o projeto cria o arquivo `.env` local, aplica as migrações no SQLite e carrega o catálogo inicial. `npm run dev` inicia o frontend em `http://127.0.0.1:3020` e a API em `127.0.0.1:3021`. Abra a porta 3020 no navegador; as chamadas do navegador passam pelo BFF do Next.js. Se houver processos antigos nas portas 3000 ou 3333, encerre-os para não abrir uma versão anterior da loja por engano.
 
 O usuário inicial do login é `convidado`, com senha de demonstração `12345678`. Para habilitar o acesso oficial, defina `OFFICIAL_ADMIN_USERNAME` e `OFFICIAL_ADMIN_PASSWORD` no `.env` local. Esse arquivo não deve ser versionado. As sessões administrativas expiram após 10 minutos.
 
@@ -66,6 +66,7 @@ As variáveis principais são:
 | `OFFICIAL_ADMIN_USERNAME` e `OFFICIAL_ADMIN_PASSWORD` | Credenciais do acesso oficial                           |
 | `ADMIN_SESSION_KEY`                                   | Chave usada nas sessões administrativas                 |
 | `NEXT_PUBLIC_DEMO_ADMIN_PASSWORD`                     | Senha de demonstração exibida na dica do menu           |
+| `API_INTERNAL_ORIGIN`                                 | Endereço interno do Fastify para o BFF                  |
 | `PORT` e `HOST`                                       | Porta e endereço do servidor combinado                  |
 
 Para servir frontend e API na mesma origem, após compilar:
@@ -75,18 +76,16 @@ npm run build
 npm run start:combined
 ```
 
-## Publicar gratuitamente na Render
+## Publicar na VPS com Coolify
 
-O [`render.yaml`](render.yaml) configura um serviço web no plano **Free** com frontend, API e verificação de saúde em `/api/v1/health`. O SQLite fica em `/tmp/cupcakes.sqlite`. Esse arquivo é temporário: pedidos, avaliações e capturas enviados ao site desaparecem quando a instância reinicia, recebe um novo deploy ou entra em repouso. A Render coloca serviços gratuitos em repouso após 15 minutos sem acesso; a primeira visita seguinte pode levar cerca de um minuto. Consulte os [limites do plano gratuito](https://render.com/docs/free).
+O arquivo [`compose.coolify.yaml`](compose.coolify.yaml) cria dois serviços: `frontend`, na porta interna 3020, e `api`, na porta interna 3021. O domínio HTTPS deve apontar **somente para `frontend:3020`**. A API não tem domínio nem porta publicada no host; ela participa apenas da rede privada `backend`. O banco SQLite usa o volume `cupcakes_data`, que mantém pedidos e avaliações após reinicializações e novos deploys. O Dockerfile não inclui o `.env` nem o banco local na imagem.
 
-O serviço gratuito não cobra pelo tempo de execução dentro da franquia, mas a Render pode cobrar excedentes de banda ou minutos de build se houver uma forma de pagamento cadastrada. Sem forma de pagamento, ela suspende o serviço ou novos builds ao atingir esses limites. Confira o consumo e a forma de pagamento em **Billing** antes de publicar.
+1. No Coolify, crie uma aplicação **Docker Compose a partir do Git**, usando `compose.coolify.yaml` na raiz do repositório. Mantenha o modo de deploy padrão, sem **Raw Compose**.
+2. Configure no Coolify as variáveis `ADMIN_PASSWORD`, `ADMIN_SESSION_KEY` e `OFFICIAL_ADMIN_PASSWORD` com valores novos. `OFFICIAL_ADMIN_USERNAME` usa `engenheiro` por padrão. Não copie o `.env` local para a VPS.
+3. Em **Domains**, adicione seu domínio HTTPS ao serviço `frontend`, apontando para a porta interna **3020**. Não atribua domínio ao serviço `api` e não publique `3021` em **Ports**. O Coolify encaminha o domínio ao contêiner por sua rede Docker; não é preciso abrir 3020 ou 3021 no firewall da VPS.
+4. Faça o deploy e confira o catálogo, o login dos dois perfis e o envio de uma avaliação. O health check da API roda apenas dentro da rede privada.
 
-1. Envie o repositório para o GitHub, incluindo `render.yaml`, sem o `.env` ou o banco SQLite local.
-2. Na Render, crie uma **Blueprint Instance** a partir desse repositório. Confirme que o serviço usa o plano **Free** e que não há disco anexado.
-3. Informe `ADMIN_PASSWORD` e `OFFICIAL_ADMIN_PASSWORD` diretamente na Render. Use senhas diferentes das locais; `OFFICIAL_ADMIN_USERNAME` já está configurado e `ADMIN_SESSION_KEY` é gerada pela Render.
-4. Após o deploy, abra a URL criada pela Render e confira `/api/v1/health`, o catálogo, o login e uma avaliação de teste.
-
-O serviço cria e migra um banco novo quando o arquivo temporário não existe, e recarrega o catálogo inicial. Os dados de `Model/data/cupcakes.sqlite` não são transferidos automaticamente. A dica pública da senha de convidado não é configurada no Blueprint.
+O BFF aceita apenas os métodos e caminhos usados pela aplicação, limita o corpo a 4,5 MB e encaminha o cookie administrativo. A validação completa dos campos, a autorização e os cálculos continuam no Fastify. As rotas `/api/v1/*` do BFF são públicas na origem do frontend para que a interface funcione; o processo Fastify em `api:3021` não fica acessível diretamente pela internet. Consulte a [documentação de Docker Compose do Coolify](https://coolify.io/docs/applications/builds/docker-compose).
 
 ## Rotas do frontend
 
@@ -106,11 +105,11 @@ O serviço cria e migra um banco novo quando o arquivo temporário não existe, 
 
 ## Endpoints da API
 
-Todos os endpoints abaixo têm o prefixo `/api/v1`. No desenvolvimento, a base é `http://localhost:3333/api/v1`; no servidor combinado, a API usa a mesma origem do frontend. `:id`, `:slug` e `:publicToken` representam parâmetros de rota.
+Todos os endpoints abaixo têm o prefixo `/api/v1`. O navegador usa a mesma origem do frontend, com encaminhamento pelo BFF. Na VPS, o Fastify escuta somente na rede privada em `api:3021`. `:id`, `:slug` e `:publicToken` representam parâmetros de rota.
 
 | Método   | Endpoint                     | Função                                                   | Acesso                      |
 | -------- | ---------------------------- | -------------------------------------------------------- | --------------------------- |
-| `GET`    | `/health`                    | Estado da API                                            | Público                     |
+| `GET`    | `/health`                    | Estado da API; usado apenas no contêiner interno         | Interno                     |
 | `GET`    | `/products`                  | Listar produtos ativos; aceita `q` e `category`          | Público                     |
 | `GET`    | `/products/:slug`            | Detalhes de um produto ativo                             | Público                     |
 | `POST`   | `/orders`                    | Criar pedido; valores calculados no servidor             | Público                     |

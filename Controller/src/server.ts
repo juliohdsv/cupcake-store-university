@@ -1,4 +1,4 @@
-import { openDatabase } from "@pit/model";
+import { migrate, openDatabase, seedProductsIfEmpty } from "@pit/model";
 import { buildApp } from "./app";
 
 const adminPassword = process.env.ADMIN_PASSWORD;
@@ -11,13 +11,20 @@ if (!adminPassword || !sessionKey || adminPassword.startsWith("CHANGE_ME") || se
 }
 
 const db = openDatabase();
+try {
+  migrate(db);
+  seedProductsIfEmpty(db);
+} catch (error) {
+  db.close();
+  throw error;
+}
 const app = buildApp({
   db, adminPassword, sessionKey, ownerUsername, ownerPassword,
   webOrigin: process.env.WEB_ORIGIN,
   production: process.env.NODE_ENV === "production",
 });
 app.addHook("onClose", async () => db.close());
-const port = Number(process.env.API_PORT ?? 3333);
+const port = Number(process.env.API_PORT ?? 3021);
 const host = process.env.API_HOST ?? (process.env.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1");
 app.listen({ port, host }).catch((error: unknown) => {
   console.error("Falha ao iniciar a API.", error);

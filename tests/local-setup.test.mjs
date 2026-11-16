@@ -22,6 +22,8 @@ test("preparo local cria senha demo, chave de sessão e banco uma vez, preservan
     const first = run();
     assert.equal(first.status, 0, first.stderr);
     const originalEnv = readFileSync(envPath, "utf8");
+    assert.match(originalEnv, /^API_PORT=3021$/m);
+    assert.match(originalEnv, /^WEB_ORIGIN=http:\/\/127\.0\.0\.1:3020$/m);
     assert.match(originalEnv, /^ADMIN_PASSWORD=12345678$/m);
     assert.match(originalEnv, /^NEXT_PUBLIC_DEMO_ADMIN_PASSWORD=12345678$/m);
     assert.match(originalEnv, /^ADMIN_SESSION_KEY=[A-Za-z0-9_-]{43}$/m);

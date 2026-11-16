@@ -31,7 +31,7 @@ const domainStatus: Record<string, number> = {
 export function buildApp(options: AppOptions) {
   const app = Fastify({ logger: false });
   const sessions = createAdminSessions(options.adminPassword, options.sessionKey, options.ownerUsername, options.ownerPassword);
-  const webOrigin = options.webOrigin ?? "http://localhost:3000";
+  const webOrigin = options.webOrigin ?? "http://127.0.0.1:3020";
   app.register(cors, {
     origin: (origin, done) => done(null, !origin || origin === webOrigin),
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],

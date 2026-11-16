@@ -8,7 +8,7 @@ const envPath = resolve(".env");
 const existed = existsSync(envPath);
 let contents = existed
   ? readFileSync(envPath, "utf8")
-  : "# Configuração local gerada automaticamente. Não envie este arquivo ao Git.\nNODE_ENV=development\nAPI_PORT=3333\nWEB_ORIGIN=http://localhost:3000\nDATABASE_PATH=./Model/data/cupcakes.sqlite\n";
+  : "# Configuração local gerada automaticamente. Não envie este arquivo ao Git.\nNODE_ENV=development\nAPI_PORT=3021\nWEB_ORIGIN=http://127.0.0.1:3020\nDATABASE_PATH=./Model/data/cupcakes.sqlite\n";
 
 function ensureSecret(name, value) {
   const assignment = new RegExp(`^${name}=(.*)$`, "m");

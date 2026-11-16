@@ -2,8 +2,7 @@ import { z } from "zod";
 import { orderSchema, productSchema, savedSiteReviewSchema } from "./schemas";
 import type { CheckoutForm, PaymentMethod, SiteReviewForm } from "./schemas";
 
-const apiBase = process.env.NEXT_PUBLIC_API_URL
-  ?? (process.env.NODE_ENV === "development" ? "http://localhost:3333/api/v1" : "/api/v1");
+const apiBase = "/api/v1";
 
 export class ApiError extends Error {
   constructor(public readonly code: string, message: string, public readonly details: Array<{ field: string; message: string }> = []) {
