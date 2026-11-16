@@ -4,12 +4,12 @@ Loja de cupcakes desenvolvida como projeto acadêmico. O sistema reúne catálog
 
 ## Tecnologias
 
-| Camada | Tecnologias |
-|---|---|
-| Frontend (`View/`) | Next.js 16 com App Router, React 19, TypeScript, Tailwind CSS 4, Zod, Context API, React-Toastify e `fetch` nativo |
-| API (`Controller/`) | Node.js, TypeScript, Fastify 5, Zod, `@fastify/cookie` e `@fastify/cors` |
-| Dados e regras (`Model/`) | SQLite, `better-sqlite3`, migrações SQL e cálculos monetários em centavos |
-| Testes | Vitest para testes unitários e de integração; Playwright para fluxos no navegador |
+| Camada                    | Tecnologias                                                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Frontend (`View/`)        | Next.js 16 com App Router, React 19, TypeScript, Tailwind CSS 4, Zod, Context API, React-Toastify e `fetch` nativo |
+| API (`Controller/`)       | Node.js, TypeScript, Fastify 5, Zod, `@fastify/cookie` e `@fastify/cors`                                           |
+| Dados e regras (`Model/`) | SQLite, `better-sqlite3`, migrações SQL e cálculos monetários em centavos                                          |
+| Testes                    | Vitest para testes unitários e de integração; Playwright para fluxos no navegador                                  |
 
 Os três diretórios são pacotes de um monorepo com npm workspaces. A View chama somente a API Fastify; o Controller valida as requisições e usa o Model para acessar o banco e aplicar as regras do pedido.
 
@@ -37,11 +37,11 @@ flowchart LR
 
 ### Cartões de demonstração
 
-| Número | Resultado |
-|---|---|
-| `4242 4242 4242 4242` | Aprovado |
+| Número                | Resultado                        |
+| --------------------- | -------------------------------- |
+| `4242 4242 4242 4242` | Aprovado                         |
 | `4000 0000 0000 9995` | Recusado por limite insuficiente |
-| `4000 0000 0000 0002` | Recusado |
+| `4000 0000 0000 0002` | Recusado                         |
 
 ## Executar localmente
 
@@ -58,15 +58,15 @@ O usuário inicial do login é `convidado`, com senha de demonstração `1234567
 
 As variáveis principais são:
 
-| Variável | Finalidade |
-|---|---|
-| `DATABASE_PATH` | Caminho do SQLite; padrão: `Model/data/cupcakes.sqlite` |
-| `API_PORT` e `WEB_ORIGIN` | Porta da API e origem do frontend no desenvolvimento |
-| `ADMIN_PASSWORD` | Senha do usuário `convidado` |
-| `OFFICIAL_ADMIN_USERNAME` e `OFFICIAL_ADMIN_PASSWORD` | Credenciais do acesso oficial |
-| `ADMIN_SESSION_KEY` | Chave usada nas sessões administrativas |
-| `NEXT_PUBLIC_DEMO_ADMIN_PASSWORD` | Senha de demonstração exibida na dica do menu |
-| `PORT` e `HOST` | Porta e endereço do servidor combinado |
+| Variável                                              | Finalidade                                              |
+| ----------------------------------------------------- | ------------------------------------------------------- |
+| `DATABASE_PATH`                                       | Caminho do SQLite; padrão: `Model/data/cupcakes.sqlite` |
+| `API_PORT` e `WEB_ORIGIN`                             | Porta da API e origem do frontend no desenvolvimento    |
+| `ADMIN_PASSWORD`                                      | Senha do usuário `convidado`                            |
+| `OFFICIAL_ADMIN_USERNAME` e `OFFICIAL_ADMIN_PASSWORD` | Credenciais do acesso oficial                           |
+| `ADMIN_SESSION_KEY`                                   | Chave usada nas sessões administrativas                 |
+| `NEXT_PUBLIC_DEMO_ADMIN_PASSWORD`                     | Senha de demonstração exibida na dica do menu           |
+| `PORT` e `HOST`                                       | Porta e endereço do servidor combinado                  |
 
 Para servir frontend e API na mesma origem, após compilar:
 
@@ -90,44 +90,44 @@ O serviço cria e migra um banco novo quando o arquivo temporário não existe, 
 
 ## Rotas do frontend
 
-| Rota | Conteúdo |
-|---|---|
-| `/` | Vitrine, busca, categorias e avaliações públicas abaixo dos produtos |
-| `/produtos/:slug` | Detalhes de um cupcake |
-| `/carrinho` | Itens e quantidades do carrinho |
-| `/checkout` | Dados de entrega e pagamento simulado |
-| `/pedido/:token` | Acompanhamento de um pedido pelo token público |
-| `/avaliacoes` | Lista de avaliações autorizadas para publicação |
-| `/avaliacoes/:id` | Detalhes de uma avaliação pública |
-| `/admin` | Login do convidado ou do acesso oficial |
-| `/admin/pedidos` | Pedidos, filtros, andamento da entrega e exclusão para o acesso oficial |
-| `/admin/avaliacoes` | Lista completa de avaliações recebidas |
-| `/admin/avaliacoes/:id` | Detalhes e exclusão de avaliação para o acesso oficial |
+| Rota                    | Conteúdo                                                                |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `/`                     | Vitrine, busca, categorias e avaliações públicas abaixo dos produtos    |
+| `/produtos/:slug`       | Detalhes de um cupcake                                                  |
+| `/carrinho`             | Itens e quantidades do carrinho                                         |
+| `/checkout`             | Dados de entrega e pagamento simulado                                   |
+| `/pedido/:token`        | Acompanhamento de um pedido pelo token público                          |
+| `/avaliacoes`           | Lista de avaliações autorizadas para publicação                         |
+| `/avaliacoes/:id`       | Detalhes de uma avaliação pública                                       |
+| `/admin`                | Login do convidado ou do acesso oficial                                 |
+| `/admin/pedidos`        | Pedidos, filtros, andamento da entrega e exclusão para o acesso oficial |
+| `/admin/avaliacoes`     | Lista completa de avaliações recebidas                                  |
+| `/admin/avaliacoes/:id` | Detalhes e exclusão de avaliação para o acesso oficial                  |
 
 ## Endpoints da API
 
 Todos os endpoints abaixo têm o prefixo `/api/v1`. No desenvolvimento, a base é `http://localhost:3333/api/v1`; no servidor combinado, a API usa a mesma origem do frontend. `:id`, `:slug` e `:publicToken` representam parâmetros de rota.
 
-| Método | Endpoint | Função | Acesso |
-|---|---|---|---|
-| `GET` | `/health` | Estado da API | Público |
-| `GET` | `/products` | Listar produtos ativos; aceita `q` e `category` | Público |
-| `GET` | `/products/:slug` | Detalhes de um produto ativo | Público |
-| `POST` | `/orders` | Criar pedido; valores calculados no servidor | Público |
-| `POST` | `/orders/:id/pay` | Simular pagamento com `publicToken` e método no corpo | Token do pedido |
-| `GET` | `/orders/track/:publicToken` | Consultar pedido e entrega | Token do pedido |
-| `POST` | `/site-reviews` | Enviar avaliação e captura opcional | Público |
-| `GET` | `/site-reviews` | Listar avaliações autorizadas para publicação | Público |
-| `GET` | `/site-reviews/:id` | Detalhes de uma avaliação pública | Público |
-| `POST` | `/admin/login` | Autenticar usuário e senha; criar cookie de sessão | Credenciais administrativas |
-| `GET` | `/admin/session` | Consultar papel e validade da sessão | Sessão administrativa |
-| `POST` | `/admin/logout` | Encerrar sessão | Cookie opcional |
-| `GET` | `/admin/orders` | Listar pagos para convidado ou todos para acesso oficial | Sessão administrativa |
-| `PATCH` | `/admin/orders/:id/status` | Avançar o estado de entrega | Sessão administrativa |
-| `DELETE` | `/admin/orders/:id` | Excluir pedido, itens e tentativas de pagamento | Acesso oficial |
-| `GET` | `/admin/site-reviews` | Listar todas as avaliações, inclusive privadas | Sessão administrativa |
-| `GET` | `/admin/site-reviews/:id` | Consultar uma avaliação completa | Sessão administrativa |
-| `DELETE` | `/admin/site-reviews/:id` | Excluir avaliação e captura | Acesso oficial |
+| Método   | Endpoint                     | Função                                                   | Acesso                      |
+| -------- | ---------------------------- | -------------------------------------------------------- | --------------------------- |
+| `GET`    | `/health`                    | Estado da API                                            | Público                     |
+| `GET`    | `/products`                  | Listar produtos ativos; aceita `q` e `category`          | Público                     |
+| `GET`    | `/products/:slug`            | Detalhes de um produto ativo                             | Público                     |
+| `POST`   | `/orders`                    | Criar pedido; valores calculados no servidor             | Público                     |
+| `POST`   | `/orders/:id/pay`            | Simular pagamento com `publicToken` e método no corpo    | Token do pedido             |
+| `GET`    | `/orders/track/:publicToken` | Consultar pedido e entrega                               | Token do pedido             |
+| `POST`   | `/site-reviews`              | Enviar avaliação e captura opcional                      | Público                     |
+| `GET`    | `/site-reviews`              | Listar avaliações autorizadas para publicação            | Público                     |
+| `GET`    | `/site-reviews/:id`          | Detalhes de uma avaliação pública                        | Público                     |
+| `POST`   | `/admin/login`               | Autenticar usuário e senha; criar cookie de sessão       | Credenciais administrativas |
+| `GET`    | `/admin/session`             | Consultar papel e validade da sessão                     | Sessão administrativa       |
+| `POST`   | `/admin/logout`              | Encerrar sessão                                          | Cookie opcional             |
+| `GET`    | `/admin/orders`              | Listar pagos para convidado ou todos para acesso oficial | Sessão administrativa       |
+| `PATCH`  | `/admin/orders/:id/status`   | Avançar o estado de entrega                              | Sessão administrativa       |
+| `DELETE` | `/admin/orders/:id`          | Excluir pedido, itens e tentativas de pagamento          | Acesso oficial              |
+| `GET`    | `/admin/site-reviews`        | Listar todas as avaliações, inclusive privadas           | Sessão administrativa       |
+| `GET`    | `/admin/site-reviews/:id`    | Consultar uma avaliação completa                         | Sessão administrativa       |
+| `DELETE` | `/admin/site-reviews/:id`    | Excluir avaliação e captura                              | Acesso oficial              |
 
 As rotas administrativas retornam `401` quando a sessão é inválida ou expira. A exclusão retorna `403` para o usuário `convidado`.
 
