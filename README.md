@@ -75,16 +75,18 @@ npm run build
 npm run start:combined
 ```
 
-## Publicar na Render
+## Publicar gratuitamente na Render
 
-O arquivo [`render.yaml`](render.yaml) configura um serviço web Node.js com build, verificação de saúde em `/api/v1/health` e um disco persistente de 1 GB para o SQLite. A Render exige um plano pago para anexar esse disco; confira o valor atual na [página de preços](https://render.com/pricing). O disco mantém pedidos e avaliações após reinicializações e novos deploys. Serviços com disco operam em uma instância e podem ter uma breve indisponibilidade durante o deploy. Consulte a [documentação de discos da Render](https://render.com/docs/disks).
+O [`render.yaml`](render.yaml) configura um serviço web no plano **Free** com frontend, API e verificação de saúde em `/api/v1/health`. O SQLite fica em `/tmp/cupcakes.sqlite`. Esse arquivo é temporário: pedidos, avaliações e capturas enviados ao site desaparecem quando a instância reinicia, recebe um novo deploy ou entra em repouso. A Render coloca serviços gratuitos em repouso após 15 minutos sem acesso; a primeira visita seguinte pode levar cerca de um minuto. Consulte os [limites do plano gratuito](https://render.com/docs/free).
 
-1. Envie o código ao repositório Git conectado à Render, incluindo `render.yaml`. O arquivo `.env` e o banco local não devem ser enviados.
-2. No painel da Render, crie uma **Blueprint Instance** a partir desse repositório e revise o plano e o disco antes de confirmar a criação.
-3. Informe `ADMIN_PASSWORD` e `OFFICIAL_ADMIN_PASSWORD` quando a Render solicitar. Use senhas novas para produção; `OFFICIAL_ADMIN_USERNAME` já está definido no Blueprint. `ADMIN_SESSION_KEY` é gerada pela Render. Não copie os valores do `.env` local para o serviço público.
-4. Após o deploy, abra a URL fornecida pela Render e verifique `/api/v1/health`, o catálogo, o login e o envio de uma avaliação de teste. Confirme que a avaliação permanece após reiniciar o serviço.
+O serviço gratuito não cobra pelo tempo de execução dentro da franquia, mas a Render pode cobrar excedentes de banda ou minutos de build se houver uma forma de pagamento cadastrada. Sem forma de pagamento, ela suspende o serviço ou novos builds ao atingir esses limites. Confira o consumo e a forma de pagamento em **Billing** antes de publicar.
 
-Na Render, `DATABASE_PATH` aponta para `/opt/render/project/src/storage/cupcakes.sqlite`, dentro do disco persistente. O serviço cria e migra um banco novo na primeira inicialização; os dados de `Model/data/cupcakes.sqlite` não são transferidos automaticamente. A dica pública da senha de convidado não é configurada no Blueprint de produção.
+1. Envie o repositório para o GitHub, incluindo `render.yaml`, sem o `.env` ou o banco SQLite local.
+2. Na Render, crie uma **Blueprint Instance** a partir desse repositório. Confirme que o serviço usa o plano **Free** e que não há disco anexado.
+3. Informe `ADMIN_PASSWORD` e `OFFICIAL_ADMIN_PASSWORD` diretamente na Render. Use senhas diferentes das locais; `OFFICIAL_ADMIN_USERNAME` já está configurado e `ADMIN_SESSION_KEY` é gerada pela Render.
+4. Após o deploy, abra a URL criada pela Render e confira `/api/v1/health`, o catálogo, o login e uma avaliação de teste.
+
+O serviço cria e migra um banco novo quando o arquivo temporário não existe, e recarrega o catálogo inicial. Os dados de `Model/data/cupcakes.sqlite` não são transferidos automaticamente. A dica pública da senha de convidado não é configurada no Blueprint.
 
 ## Rotas do frontend
 
