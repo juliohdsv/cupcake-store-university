@@ -75,6 +75,17 @@ npm run build
 npm run start:combined
 ```
 
+## Publicar na Render
+
+O arquivo [`render.yaml`](render.yaml) configura um serviço web Node.js com build, verificação de saúde em `/api/v1/health` e um disco persistente de 1 GB para o SQLite. A Render exige um plano pago para anexar esse disco; confira o valor atual na [página de preços](https://render.com/pricing). O disco mantém pedidos e avaliações após reinicializações e novos deploys. Serviços com disco operam em uma instância e podem ter uma breve indisponibilidade durante o deploy. Consulte a [documentação de discos da Render](https://render.com/docs/disks).
+
+1. Envie o código ao repositório Git conectado à Render, incluindo `render.yaml`. O arquivo `.env` e o banco local não devem ser enviados.
+2. No painel da Render, crie uma **Blueprint Instance** a partir desse repositório e revise o plano e o disco antes de confirmar a criação.
+3. Informe `ADMIN_PASSWORD` e `OFFICIAL_ADMIN_PASSWORD` quando a Render solicitar. Use senhas novas para produção; `OFFICIAL_ADMIN_USERNAME` já está definido no Blueprint. `ADMIN_SESSION_KEY` é gerada pela Render. Não copie os valores do `.env` local para o serviço público.
+4. Após o deploy, abra a URL fornecida pela Render e verifique `/api/v1/health`, o catálogo, o login e o envio de uma avaliação de teste. Confirme que a avaliação permanece após reiniciar o serviço.
+
+Na Render, `DATABASE_PATH` aponta para `/opt/render/project/src/storage/cupcakes.sqlite`, dentro do disco persistente. O serviço cria e migra um banco novo na primeira inicialização; os dados de `Model/data/cupcakes.sqlite` não são transferidos automaticamente. A dica pública da senha de convidado não é configurada no Blueprint de produção.
+
 ## Rotas do frontend
 
 | Rota | Conteúdo |
