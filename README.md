@@ -24,6 +24,8 @@ flowchart LR
     Controller --> Sessao["Sessão administrativa · cookie HttpOnly"]
 ```
 
+[Modelagem UML das tabelas SQLite (SVG)](docs/modelagem-dados-uml.svg) · [imagem PNG](docs/modelagem-dados-uml.png). O diagrama é gerado a partir das migrações com `node docs/gerar-modelagem-uml.mjs`.
+
 ## Funcionalidades
 
 - **Catálogo:** dez cupcakes com fotos locais, busca por nome, filtro por categoria e página de detalhes.

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2220" height="1580" viewBox="0 0 2220 1580" role="img" aria-labelledby="title description">
+  <title id="title">Modelagem UML do banco SQLite da Doce &amp; Afeto</title>
+  <desc id="description">Seis tabelas: products, orders, order_items, payment_attempts, site_reviews e schema_migrations. Pedidos têm itens e tentativas de pagamento; produtos aparecem em itens de pedido.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#30231f" flood-opacity="0.08"/></filter>
+  </defs>
+  <rect width="2220" height="1580" fill="#fff9f4"/>
+  <rect width="2220" height="9" fill="#a72c55"/>
+  <text x="90" y="83" fill="#30231f" font-family="Georgia, serif" font-size="48" font-weight="700">Modelagem de dados · SQLite</text>
+  <text x="90" y="125" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="21">Doce &amp; Afeto — tabelas, campos e relacionamentos do projeto</text>
+
+  <g fill="none" stroke="#a72c55" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1370 660H1470V765H1570"/>
+    <path d="M1850 513V630"/>
+    <path d="M1080 810V1250H1570"/>
+  </g>
+  <text x="1390" y="650" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">1</text>
+  <text x="1505" y="752" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">0..*</text>
+  <text x="1868" y="550" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">1</text>
+  <text x="1868" y="615" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">0..*</text>
+  <text x="1097" y="850" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">1</text>
+  <text x="1505" y="1238" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">0..*</text>
+
+  <g filter="url(#shadow)"><rect x="90" y="190" width="580" height="404" rx="18" fill="#ffffff" stroke="#e9dcd3" stroke-width="2"/></g>
+<path d="M108 190H652Q670 190 670 208V252H90V208Q90 190 108 190Z" fill="#a72c55"/>
+<text x="112" y="217" fill="#fff9f4" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Avaliações do site</text>
+<text x="112" y="240" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">site_reviews</text>
+<text x="648" y="238" text-anchor="end" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16">12 campos</text>
+<rect x="92" y="252" width="576" height="27" fill="#fffaf7"/>
+<text x="113" y="271" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">id</text>
+<text x="495" y="271" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="605" y="256" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="626" y="270" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">PK</text>
+<text x="113" y="298" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">reviewer_name</text>
+<text x="495" y="298" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="92" y="306" width="576" height="27" fill="#fffaf7"/>
+<text x="113" y="325" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">test_date</text>
+<text x="495" y="325" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="113" y="352" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">worked</text>
+<text x="495" y="352" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="92" y="360" width="576" height="27" fill="#fffaf7"/>
+<text x="113" y="379" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">failed</text>
+<text x="495" y="379" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="113" y="406" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">not_tested</text>
+<text x="495" y="406" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="92" y="414" width="576" height="27" fill="#fffaf7"/>
+<text x="113" y="433" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">suggestions</text>
+<text x="495" y="433" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="113" y="460" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">rating</text>
+<text x="495" y="460" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<rect x="92" y="468" width="576" height="27" fill="#fffaf7"/>
+<text x="113" y="487" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">screenshot_mime</text>
+<text x="495" y="487" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT?</text>
+<text x="113" y="514" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">screenshot_data</text>
+<text x="495" y="514" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">BLOB?</text>
+<rect x="92" y="522" width="576" height="27" fill="#fffaf7"/>
+<text x="113" y="541" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">created_at</text>
+<text x="495" y="541" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="113" y="568" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">publication_consent</text>
+<text x="495" y="568" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+  <g filter="url(#shadow)"><rect x="90" y="740" width="580" height="134" rx="18" fill="#ffffff" stroke="#e9dcd3" stroke-width="2"/></g>
+<path d="M108 740H652Q670 740 670 758V802H90V758Q90 740 108 740Z" fill="#6b5a53"/>
+<text x="112" y="767" fill="#fff9f4" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Controle de migrações</text>
+<text x="112" y="790" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">schema_migrations</text>
+<text x="648" y="788" text-anchor="end" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16">2 campos</text>
+<rect x="92" y="802" width="576" height="27" fill="#fffaf7"/>
+<text x="113" y="821" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">name</text>
+<text x="495" y="821" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="605" y="806" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="626" y="820" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">PK</text>
+<text x="113" y="848" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">applied_at</text>
+<text x="495" y="848" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+  <g filter="url(#shadow)"><rect x="770" y="190" width="600" height="593" rx="18" fill="#ffffff" stroke="#e9dcd3" stroke-width="2"/></g>
+<path d="M788 190H1352Q1370 190 1370 208V252H770V208Q770 190 788 190Z" fill="#a72c55"/>
+<text x="792" y="217" fill="#fff9f4" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Pedidos</text>
+<text x="792" y="240" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">orders</text>
+<text x="1348" y="238" text-anchor="end" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16">19 campos</text>
+<rect x="772" y="252" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="271" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">id</text>
+<text x="1195" y="271" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="1305" y="256" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="1326" y="270" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">PK</text>
+<text x="793" y="298" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">public_token</text>
+<text x="1195" y="298" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="1305" y="283" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="1326" y="297" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">UQ</text>
+<rect x="772" y="306" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="325" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">customer_name</text>
+<text x="1195" y="325" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="793" y="352" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">customer_email</text>
+<text x="1195" y="352" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="772" y="360" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="379" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">customer_phone</text>
+<text x="1195" y="379" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="793" y="406" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">zip_code</text>
+<text x="1195" y="406" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="772" y="414" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="433" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">street</text>
+<text x="1195" y="433" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="793" y="460" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">street_number</text>
+<text x="1195" y="460" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="772" y="468" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="487" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">complement</text>
+<text x="1195" y="487" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT?</text>
+<text x="793" y="514" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">neighborhood</text>
+<text x="1195" y="514" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="772" y="522" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="541" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">city</text>
+<text x="1195" y="541" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="793" y="568" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">state</text>
+<text x="1195" y="568" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="772" y="576" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="595" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">subtotal_cents</text>
+<text x="1195" y="595" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<text x="793" y="622" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">shipping_cents</text>
+<text x="1195" y="622" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<rect x="772" y="630" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="649" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">total_cents</text>
+<text x="1195" y="649" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<text x="793" y="676" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">payment_status</text>
+<text x="1195" y="676" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="772" y="684" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="703" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">fulfillment_status</text>
+<text x="1195" y="703" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="793" y="730" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">created_at</text>
+<text x="1195" y="730" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="772" y="738" width="596" height="27" fill="#fffaf7"/>
+<text x="793" y="757" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">paid_at</text>
+<text x="1195" y="757" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT?</text>
+  <g filter="url(#shadow)"><rect x="1570" y="190" width="560" height="323" rx="18" fill="#ffffff" stroke="#e9dcd3" stroke-width="2"/></g>
+<path d="M1588 190H2112Q2130 190 2130 208V252H1570V208Q1570 190 1588 190Z" fill="#a72c55"/>
+<text x="1592" y="217" fill="#fff9f4" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Produtos</text>
+<text x="1592" y="240" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">products</text>
+<text x="2108" y="238" text-anchor="end" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16">9 campos</text>
+<rect x="1572" y="252" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="271" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">id</text>
+<text x="1955" y="271" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="2065" y="256" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="2086" y="270" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">PK</text>
+<text x="1593" y="298" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">slug</text>
+<text x="1955" y="298" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="2065" y="283" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="2086" y="297" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">UQ</text>
+<rect x="1572" y="306" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="325" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">name</text>
+<text x="1955" y="325" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="1593" y="352" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">description</text>
+<text x="1955" y="352" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="1572" y="360" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="379" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">category</text>
+<text x="1955" y="379" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="1593" y="406" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">image_path</text>
+<text x="1955" y="406" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="1572" y="414" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="433" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">price_cents</text>
+<text x="1955" y="433" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<text x="1593" y="460" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">active</text>
+<text x="1955" y="460" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<rect x="1572" y="468" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="487" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">created_at</text>
+<text x="1955" y="487" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+  <g filter="url(#shadow)"><rect x="1570" y="630" width="560" height="269" rx="18" fill="#ffffff" stroke="#e9dcd3" stroke-width="2"/></g>
+<path d="M1588 630H2112Q2130 630 2130 648V692H1570V648Q1570 630 1588 630Z" fill="#a72c55"/>
+<text x="1592" y="657" fill="#fff9f4" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Itens do pedido</text>
+<text x="1592" y="680" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">order_items</text>
+<text x="2108" y="678" text-anchor="end" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16">7 campos</text>
+<rect x="1572" y="692" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="711" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">id</text>
+<text x="1955" y="711" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="2065" y="696" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="2086" y="710" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">PK</text>
+<text x="1593" y="738" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">order_id</text>
+<text x="1955" y="738" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="2065" y="723" width="42" height="19" rx="6" fill="#e7eff5"/>
+<text x="2086" y="737" text-anchor="middle" fill="#365f7a" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">FK</text>
+<rect x="1572" y="746" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="765" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">product_id</text>
+<text x="1955" y="765" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="2065" y="750" width="42" height="19" rx="6" fill="#e7eff5"/>
+<text x="2086" y="764" text-anchor="middle" fill="#365f7a" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">FK</text>
+<text x="1593" y="792" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">product_name</text>
+<text x="1955" y="792" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="1572" y="800" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="819" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">unit_price_cents</text>
+<text x="1955" y="819" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<text x="1593" y="846" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">quantity</text>
+<text x="1955" y="846" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+<rect x="1572" y="854" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="873" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">line_total_cents</text>
+<text x="1955" y="873" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">INTEGER</text>
+  <g filter="url(#shadow)"><rect x="1570" y="1125" width="560" height="242" rx="18" fill="#ffffff" stroke="#e9dcd3" stroke-width="2"/></g>
+<path d="M1588 1125H2112Q2130 1125 2130 1143V1187H1570V1143Q1570 1125 1588 1125Z" fill="#a72c55"/>
+<text x="1592" y="1152" fill="#fff9f4" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Tentativas de pagamento</text>
+<text x="1592" y="1175" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">payment_attempts</text>
+<text x="2108" y="1173" text-anchor="end" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16">6 campos</text>
+<rect x="1572" y="1187" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="1206" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">id</text>
+<text x="1955" y="1206" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="2065" y="1191" width="42" height="19" rx="6" fill="#f8e5e8"/>
+<text x="2086" y="1205" text-anchor="middle" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">PK</text>
+<text x="1593" y="1233" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">order_id</text>
+<text x="1955" y="1233" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="2065" y="1218" width="42" height="19" rx="6" fill="#e7eff5"/>
+<text x="2086" y="1232" text-anchor="middle" fill="#365f7a" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700">FK</text>
+<rect x="1572" y="1241" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="1260" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">card_last4</text>
+<text x="1955" y="1260" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="1593" y="1287" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">outcome</text>
+<text x="1955" y="1287" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<rect x="1572" y="1295" width="556" height="27" fill="#fffaf7"/>
+<text x="1593" y="1314" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">created_at</text>
+<text x="1955" y="1314" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+<text x="1593" y="1341" fill="#30231f" font-family="Menlo, Consolas, monospace" font-size="17">method</text>
+<text x="1955" y="1341" fill="#6b5a53" font-family="Menlo, Consolas, monospace" font-size="16">TEXT</text>
+
+  <rect x="90" y="1020" width="580" height="330" rx="18" fill="#ffffff" stroke="#e9dcd3" stroke-width="2"/>
+  <text x="116" y="1062" fill="#30231f" font-family="Georgia, serif" font-size="27" font-weight="700">Legenda e regras</text>
+  <text x="116" y="1103" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="19">PK chave primária · FK chave estrangeira</text>
+  <text x="116" y="1134" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="19">UQ valor único · ? campo opcional</text>
+  <text x="116" y="1178" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="19">Valores monetários: INTEGER em centavos.</text>
+  <text x="116" y="1209" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="19">Quantidade: 1 a 20 · Nota: 1 a 5.</text>
+  <text x="116" y="1253" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="19">Capturas: BLOB em site_reviews.</text>
+  <text x="116" y="1284" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="19">Itens e tentativas são apagados com o pedido.</text>
+  <text x="116" y="1323" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">1 → 0..* indica um-para-muitos</text>
+
+  <path d="M90 1460H2130" stroke="#e9dcd3" stroke-width="2"/>
+  <text x="90" y="1500" fill="#6b5a53" font-family="Arial, Helvetica, sans-serif" font-size="18">Fonte: migrações SQLite 001–005 e schema_migrations criada pelo migrador.</text>
+  <text x="2130" y="1500" text-anchor="end" fill="#a72c55" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">PIT II · Doce &amp; Afeto</text>
+</svg>
